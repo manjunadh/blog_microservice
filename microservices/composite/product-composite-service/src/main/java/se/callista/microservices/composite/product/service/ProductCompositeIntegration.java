@@ -44,7 +44,7 @@ public class ProductCompositeIntegration {
     // -------- //
 
     @HystrixCommand(fallbackMethod = "defaultProduct")
-    public ResponseEntity<Product> getProduct() {
+    public Product getProduct(String id) {
 
         LOG.debug("Will call getProduct with Hystrix protection");
 
@@ -58,7 +58,7 @@ public class ProductCompositeIntegration {
         Product product = response2Product(resultStr);
        // LOG.debug("GetProduct.id: {}", product.getProductId());
 
-        return util.createOkResponse(product);
+        return product;
     }
 
     /**

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class ProductAggregated {
     private int productId;
     private String name;
-    private int weight;
+    private String description;
     private List<RecommendationSummary> recommendations;
     private List<ReviewSummary> reviews;
 
@@ -22,7 +22,7 @@ public class ProductAggregated {
         // 1. Setup product info
         this.productId = product.getProductId();
         this.name = product.getName();
-        this.weight = product.getWeight();
+        this.description = product.getname();
 
         // 2. Copy summary recommendation info, if available
         if (recommendations != null)

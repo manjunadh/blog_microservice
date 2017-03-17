@@ -86,7 +86,7 @@ public class ProductCompositeService {
 //        }
 //    }
 
-    private Product getBasicProductInfo(@PathVariable int productId) {
+    private Product getBasicProductInfo(@PathVariable String productId) {
         ResponseEntity<Product> productResult = integration.getProduct(productId);
         Product product = null;
         if (!productResult.getStatusCode().is2xxSuccessful()) {
