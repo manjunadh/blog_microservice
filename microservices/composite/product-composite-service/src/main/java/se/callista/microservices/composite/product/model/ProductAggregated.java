@@ -22,7 +22,7 @@ public class ProductAggregated {
         // 1. Setup product info
         this.productId = product.getProductId();
         this.name = product.getName();
-        this.description = product.getname();
+        this.description = product.getName();
 
         // 2. Copy summary recommendation info, if available
         if (recommendations != null)
@@ -45,8 +45,8 @@ public class ProductAggregated {
         return name;
     }
 
-    public int getWeight() {
-        return weight;
+    public String getDescription() {
+        return description;
     }
 
     public List<RecommendationSummary> getRecommendations() {

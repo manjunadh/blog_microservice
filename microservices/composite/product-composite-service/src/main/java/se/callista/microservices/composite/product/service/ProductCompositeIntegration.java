@@ -44,7 +44,7 @@ public class ProductCompositeIntegration {
     // -------- //
 
     @HystrixCommand(fallbackMethod = "defaultProduct")
-    public Product getProduct(String id) {
+    public Product getProduct(int id) {
 
         LOG.debug("Will call getProduct with Hystrix protection");
 
