@@ -43,7 +43,7 @@ public class ProductService {
         sleep(pt);
 
         LOG.debug("/product return the found product");
-        return new Product(productId, "name", 123);
+        return new Product("pro001", "upc","name", "desc");
     }
 
     private void sleep(int pt) {
