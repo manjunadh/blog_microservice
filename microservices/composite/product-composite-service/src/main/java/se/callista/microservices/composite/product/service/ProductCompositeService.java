@@ -42,51 +42,49 @@ public class ProductCompositeService {
     @Autowired
     ServiceUtils util;
 
-    @RequestMapping("/")
-    public String getProduct() {
-        return "{\"timestamp\":\"" + new Date() + "\",\"content\":\"Hello from ProductAPi\"}";
-    }
+//    @RequestMapping("/")
+//    public String getProduct() {
+//        return "{\"timestamp\":\"" + new Date() + "\",\"content\":\"Hello from ProductAPi\"}";
+//    }
+//public ResponseEntity<ProductAggregated> getProduct(@PathVariable int productId) {
+    @RequestMapping("/{productId}")
+    public Product getProduct(@PathVariable int productId) {
 
-    
-    
-//  public ResponseEntity<ProductAggregated> getProduct(@PathVariable int productId) {   
-    @RequestMapping("/test")
-    	public ResponseEntity<Product> getProduct() {
         LOG.info("Synch start...");
 
         // 1. First get mandatory product information
         Product product = getBasicProductInfo(productId);
 
-        // 2. Get optional recommendations
-        List<Recommendation> recommendations = getRecommendations(productId);
+//        // 2. Get optional recommendations
+//        List<Recommendation> recommendations = getRecommendations(productId);
+//
+//        // 3. Get optional reviews
+//        List<Review> reviews = getReviews(productId);
 
-        // 3. Get optional reviews
-        List<Review> reviews = getReviews(productId);
-
-        return util.createOkResponse(new ProductAggregated(product, recommendations, reviews));
+        return product;
     }
 
 //    @RequestMapping("/{productId}")
-    public ResponseEntity<ProductAggregated> getProductAsync(@PathVariable int productId) {
-
-        try {
-            LOG.info("Asynch start...");
-            CompletableFuture<Product>              productFuture            = supplyAsync( () -> getBasicProductInfo(productId));
-            CompletableFuture<List<Recommendation>> recommendationListFuture = supplyAsync( () -> getRecommendations(productId));
-            CompletableFuture<List<Review>>         reviewListFuture         = supplyAsync( () -> getReviews(productId));
-
-            LOG.info("Asynch, allOf.join...");
-            allOf(productFuture, recommendationListFuture, reviewListFuture).join();
-
-
-            LOG.info("Asynch, create result and return...");
-            return util.createOkResponse(new ProductAggregated(productFuture.get(), recommendationListFuture.get(), reviewListFuture.get()));
-
-        } catch (InterruptedException | ExecutionException e) {
-            LOG.error("getProductAsync error", e);
-            throw new RuntimeException(e);
-        }
-    }
+//    public ResponseEntity<ProductAggregated> getProductAsync(@PathVariable int productId) {
+//
+//        try {
+//            LOG.info("Asynch start...");
+//            CompletableFuture<Product>              productFuture            = supplyAsync( () -> getBasicProductInfo(productId));
+//            CompletableFuture<List<Recommendation>> recommendationListFuture = supplyAsync( () -> getRecommendations(productId));
+//            CompletableFuture<List<Review>>         reviewListFuture         = supplyAsync( () -> getReviews(productId));
+//
+//            LOG.info("Asynch, allOf.join...");
+//            allOf(productFuture, recommendationListFuture, reviewListFuture).join();
+//
+//
+//            LOG.info("Asynch, create result and return...");
+//            return util.createOkResponse(new ProductAggregated(productFuture.get(), recommendationListFuture.get(), reviewListFuture.get()));
+//
+//        } catch (InterruptedException | ExecutionException e) {
+//            LOG.error("getProductAsync error", e);
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     private Product getBasicProductInfo(@PathVariable int productId) {
         ResponseEntity<Product> productResult = integration.getProduct(productId);
@@ -100,32 +98,32 @@ public class ProductCompositeService {
         return product;
     }
 
-    private List<Review> getReviews(@PathVariable int productId) {
-        ResponseEntity<List<Review>> reviewsResult = integration.getReviews(productId);
-        List<Review> reviews = null;
-        if (!reviewsResult.getStatusCode().is2xxSuccessful()) {
-            // Something went wrong with getReviews, simply skip the review-information in the response
-            LOG.debug("Call to getReviews failed: {}", reviewsResult.getStatusCode());
-        } else {
-            reviews = reviewsResult.getBody();
-        }
-        return reviews;
-    }
-
-    private List<Recommendation> getRecommendations(@PathVariable int productId) {
-        List<Recommendation> recommendations = null;
-        try {
-            ResponseEntity<List<Recommendation>> recommendationResult = integration.getRecommendations(productId);
-            if (!recommendationResult.getStatusCode().is2xxSuccessful()) {
-                // Something went wrong with getRecommendations, simply skip the recommendation-information in the response
-                LOG.debug("Call to getRecommendations failed: {}", recommendationResult.getStatusCode());
-            } else {
-                recommendations = recommendationResult.getBody();
-            }
-        } catch (Throwable t) {
-            LOG.error("getProduct error", t);
-            throw t;
-        }
-        return recommendations;
-    }
+//    private List<Review> getReviews(@PathVariable int productId) {
+//        ResponseEntity<List<Review>> reviewsResult = integration.getReviews(productId);
+//        List<Review> reviews = null;
+//        if (!reviewsResult.getStatusCode().is2xxSuccessful()) {
+//            // Something went wrong with getReviews, simply skip the review-information in the response
+//            LOG.debug("Call to getReviews failed: {}", reviewsResult.getStatusCode());
+//        } else {
+//            reviews = reviewsResult.getBody();
+//        }
+//        return reviews;
+//    }
+//
+//    private List<Recommendation> getRecommendations(@PathVariable int productId) {
+//        List<Recommendation> recommendations = null;
+//        try {
+//            ResponseEntity<List<Recommendation>> recommendationResult = integration.getRecommendations(productId);
+//            if (!recommendationResult.getStatusCode().is2xxSuccessful()) {
+//                // Something went wrong with getRecommendations, simply skip the recommendation-information in the response
+//                LOG.debug("Call to getRecommendations failed: {}", recommendationResult.getStatusCode());
+//            } else {
+//                recommendations = recommendationResult.getBody();
+//            }
+//        } catch (Throwable t) {
+//            LOG.error("getProduct error", t);
+//            throw t;
+//        }
+//        return recommendations;
+//    }
 }
