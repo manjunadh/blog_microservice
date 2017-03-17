@@ -87,15 +87,15 @@ public class ProductCompositeService {
 //    }
 
     private Product getBasicProductInfo(@PathVariable int productId) {
-        ResponseEntity<Product> productResult = integration.getProduct(productId);
-        Product product = null;
-        if (!productResult.getStatusCode().is2xxSuccessful()) {
-            // Something went wrong with getProduct, simply skip the product-information in the response
-            LOG.debug("Call to getProduct failed: {}", productResult.getStatusCode());
-        } else {
-            product = productResult.getBody();
-        }
-        return product;
+        Product productResult = integration.getProduct(productId);
+//        Product product = null;
+//        if (!productResult.getStatusCode().is2xxSuccessful()) {
+//            // Something went wrong with getProduct, simply skip the product-information in the response
+//            LOG.debug("Call to getProduct failed: {}", productResult.getStatusCode());
+//        } else {
+//            product = productResult.getBody();
+//        }
+        return productResult;
     }
 
 //    private List<Review> getReviews(@PathVariable int productId) {
