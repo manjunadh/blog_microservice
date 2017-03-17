@@ -56,7 +56,7 @@ public class ProductCompositeIntegration {
         LOG.debug("GetProduct body: {}", resultStr.getBody());
 
         Product product = response2Product(resultStr);
-        LOG.debug("GetProduct.id: {}", product.getProductId());
+       // LOG.debug("GetProduct.id: {}", product.getProductId());
 
         return util.createOkResponse(product);
     }
@@ -70,7 +70,7 @@ public class ProductCompositeIntegration {
     public ResponseEntity<Product> defaultProduct(int productId) {
         LOG.warn("Using fallback method for product-service");
         return util.createResponse(
-            new Product(productId, "Fallback Name", -1),
+            new Product("pro001", "Fallback Name", "name","desc"),
             HttpStatus.OK);
     }
 
