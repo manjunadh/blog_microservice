@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Created by magnus on 04/03/15.
  */
 public class ProductAggregated {
-    private int productId;
+    private String productId;
     private String name;
     private String description;
     private List<RecommendationSummary> recommendations;
@@ -20,7 +20,7 @@ public class ProductAggregated {
     public ProductAggregated(Product product, List<Recommendation> recommendations, List<Review> reviews) {
 
         // 1. Setup product info
-        this.productId = product.getProductId();
+        this.productId = product.getId();
         this.name = product.getName();
         this.description = product.getName();
 
@@ -37,7 +37,7 @@ public class ProductAggregated {
                 .collect(Collectors.toList());
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
